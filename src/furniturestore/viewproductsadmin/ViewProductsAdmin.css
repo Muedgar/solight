@@ -1,0 +1,66 @@
+.sofa_light_dashboard_furniturestore_components_viewproducts {
+    width: 80vw;
+    height: fit-content;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 20px;
+    position: relative;
+}
+.sofa_light_dashboard_furniturestore_components_viewproducts .filter_menu {
+    width: fit-content;
+    height: 30px;
+    position: absolute;
+    top:-20px;
+    cursor: pointer;
+    font-family: 'Montserrat','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    color: black;
+    
+    font-size: 12px;
+    
+    border: 1px solid black;
+    background-color: transparent;
+}
+.sofa_light_dashboard_furniturestore_components_viewproducts .filter_menu:hover {
+    background-color: black;
+    color: white;
+}
+.sofa_light_dashboard_furniturestore_components_viewproducts_left {
+    position: absolute;
+    width: 250px;
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+    box-shadow: 0 0 10px 10px rgba(219, 219, 219, 0.321);
+    z-index: 100;
+    overflow: hidden;
+}
+.sofa_light_dashboard_furniturestore_components_viewproducts_filter_title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgb(225, 225, 225);
+}
+.sofa_light_dashboard_furniturestore_components_viewproducts_filter_title img {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    margin-left: 20px;
+}
+.sofa_light_dashboard_furniturestore_components_viewproducts_filter_title p {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.products_show {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
