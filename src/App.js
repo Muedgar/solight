@@ -1,10 +1,11 @@
 import React from "react";
-import FurnitureStore from "./furniturestore/FurnitureStore";
+import Dashboard from "./dashboard/Dashboard";
+
 
 function App() {
   return (
     <div>
-      <FurnitureStore />
+      <Dashboard />
     </div>
   );
 }

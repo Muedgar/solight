@@ -1,23 +1,4 @@
-import React from 'react'
-import EditProduct from './editproduct/EditProduct';
-//import AddProduct from './addproduct/AddProduct';
-
-import './FurnitureStore.css';
-//import ProductDetails from './productdetails/ProductDetails';
-//import ViewProducts from './viewproducts/ViewProducts';
-// import ViewProductsAdmin from './viewproductsadmin/ViewProductsAdmin';
-
-
-function FurnitureStore() {
-  return (
-    <div className='sofa_light_dashboard_furniturestore'>
-        {/* <ProductDetails /> */}
-        {/* <AddProduct /> */}
-        {/* <ViewProducts /> */}
-        {/* <ViewProductsAdmin /> */}
-        <EditProduct />
-    </div>
-  )
-}
-
-export default FurnitureStore
+export {default as ViewProductsAdmin} from './viewproductsadmin/ViewProductsAdmin'
+export {default as AddProduct} from './addproduct/AddProduct'
+export {default as EditProduct} from './editproduct/EditProduct'
+export {default as ProductDetails} from './productdetails/ProductDetails'

@@ -3,10 +3,10 @@ import ProductPreview from '../components/productpreview/ProductPreview'
 
 import './ProductDetails.css'
 
-function ProductDetails() {
+function ProductDetails(props) {
   return (
     <div>
-        <ProductPreview />
+        <ProductPreview role={props.role} />
     </div>
   )
 }

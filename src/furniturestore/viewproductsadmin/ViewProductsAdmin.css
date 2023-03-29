@@ -1,7 +1,7 @@
 .sofa_light_dashboard_furniturestore_components_viewproducts {
     width: 80vw;
     height: fit-content;
-    margin: auto;
+    margin: 70px auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

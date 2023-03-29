@@ -41,8 +41,11 @@ function PriceRange(props) {
    
   return (
     <div className='sofa_light_dashboard_furniturestore_components_pricerange'>
-        <p className='sizeOne'>Price Range</p>
-        <input className='slider' type="range" value={val} onChange={e => setVal(e.target.value)} min={`${props.min}`} max={`${props.max}`}/>
+        <p style={{paddingTop: '20px'}} className='sizeOne'>Price Range</p>
+        <input className='slider' type="range" value={val} onChange={e => {
+            setVal(e.target.value)
+            props.keepSync(val)
+        }} min={`${props.min}`} max={`${props.max}`}/>
         <p className='sizeTwo'>
             <span>{formatPrice(props.min)} RWF</span>
             -

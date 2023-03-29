@@ -1,4 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState,useRef,useEffect} from 'react'
+import '@coreui/coreui/dist/css/coreui.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+import { CToast,CToastHeader,CToastBody,CButton,CToaster } from '@coreui/react';
 
 import Titles from '../components/titles/Titles'
 import Labels from '../components/labels/Labels'
@@ -12,75 +16,146 @@ import ImageViewer from '../components/imageviewer/ImageViewer'
 
 import "../components/imageuploader/ImageUpload.css"
 import upload from "../components/imageuploader/upload.svg"
-import ActionButton from '../components/actionbuttons/ActionButton'
+import EditActionButton from '../components/actionbuttons/EditActionButton'
 
 import saveProduct from './saveProduct'
 
 function EditProduct() {
-  // image 
-  let [products, setProducts] = useState([]);
 
-  let [productName, setProductName] = useState();
-  let [productSubText, setProductSubText] = useState();
-  let [productCategory, setProductCategory] = useState();
-  let [productPrice, setProductPrice] = useState();
-  let [productDiscount, setProductDiscount] = useState();
-  let [productStatus, setProductStatus] = useState();
-  let [productDescription, setProductDescription] = useState();
-  let [productMetaTitle, setProductMetaTitle] = useState();
-  let [productKeyword, setProductKeyword] = useState();
+
+  
+  let productInfos = JSON.parse(localStorage.getItem('product_edit'))
+  // product images
+  let [products, setProducts] = useState(productInfos.images);
+
+  let [productName, setProductName] = useState(productInfos.productInfo.productName);
+  let [productSubText, setProductSubText] = useState(productInfos.productInfo.productSubText);
+  let [productCategory, setProductCategory] = useState(productInfos.productInfo.productCategory);
+  let [productPrice, setProductPrice] = useState(productInfos.productInfo.productPrice);
+  let [productDiscount, setProductDiscount] = useState(productInfos.productInfo.productDiscount);
+  let [productStatus, setProductStatus] = useState(productInfos.productInfo.productStatus);
+  let [productDescription, setProductDescription] = useState(productInfos.productInfo.productDescription);
+  let [productMetaTitle, setProductMetaTitle] = useState(productInfos.productInfo.productMetaTitle);
+  let [productKeyword, setProductKeyword] = useState(productInfos.productInfo.productKeyword);
 
   function handleClickUploadImage() {
-    if(products.length===4) return;
-    console.log("clicked");
-    let fileInput = document.createElement('input');
-    fileInput.setAttribute('id', 'createProductInput');
-    fileInput.setAttribute('type', 'file');
-    fileInput.setAttribute('accept', 'image/png, image/jpeg');
-    fileInput.addEventListener('change',
-      handleChangeUploadImage
-    );
-    fileInput.style.display = "none";
-    document.getElementById("sofa_light_dashboard_furniturestore_components_product_images_div").appendChild(fileInput);
-    fileInput.click();
+   if(products.length >= 4) return;
+    widgetRef.current.open()
 }
 
-function handleChangeUploadImage() {
-  let id = "createProductInput";
-    let input = document.getElementById(id);
-    input.file = input.files[0];
-    var fReader = new FileReader();
-    fReader.readAsDataURL(input.files[0]);
-    // document.getElementById("fileId").value = input.files[0].name;
-    // console.log(input.files[0].name);
-    fReader.onloadend = function(event) {
-            setProducts([...products,[`${event.target.result}`,input.files[0].name,`${input.files[0].name}${products.length+1}`]]);
-            console.log("products",products);
-        }
-        document.getElementById("sofa_light_dashboard_furniturestore_components_product_images_div").removeChild(document.getElementById(id));
-}
+
+const [toast, addToast] = useState(0)
+const success = useRef()
+const failure = useRef()
+const emptyError = useRef()
+const successToast = (
+  <CToast>
+    <CToastHeader closeButton>
+      <svg
+        className="rounded me-2"
+        width="20"
+        height="20"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+      >
+        <rect width="100%" height="100%" fill="green"></rect>
+      </svg>
+      <div className="fw-bold me-auto">Product Update Status</div>
+      <small>Now</small>
+    </CToastHeader>
+    <CToastBody>Product updated successfully.</CToastBody>
+  </CToast>
+)
+const failureToast = (
+  <CToast>
+    <CToastHeader closeButton>
+      <svg
+        className="rounded me-2"
+        width="20"
+        height="20"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+      >
+        <rect width="100%" height="100%" fill="red"></rect>
+      </svg>
+      <div className="fw-bold me-auto">Product Update Status</div>
+      <small>Now</small>
+    </CToastHeader>
+    <CToastBody>Product not updated. Refresh the page and try again or contact support if the problem persists.</CToastBody>
+  </CToast>
+)
+
+const emptyerrorbuttonId = (
+  <CToast>
+    <CToastHeader closeButton>
+      <svg
+        className="rounded me-2"
+        width="20"
+        height="20"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+      >
+        <rect width="100%" height="100%" fill="red"></rect>
+      </svg>
+      <div className="fw-bold me-auto">Product Update Status</div>
+      <small>Now</small>
+    </CToastHeader>
+    <CToastBody>Some of products information are empty and you need to upload at least one image</CToastBody>
+  </CToast>
+)
+const cloudinaryRef = useRef();
+    const widgetRef = useRef();
+    useEffect(() => {
+        cloudinaryRef.current = window.cloudinary;
+        widgetRef.current = cloudinaryRef.current.createUploadWidget({
+            cloudName: process.env.REACT_APP_CLOUD_NAME,
+            uploadPreset: process.env.REACT_APP_UPLOAD_PRESET
+        }, function(error, result) {
+            if(!error && result && result.event === "success") {
+             
+                setProducts([...products, [result.info.original_filename, result.info.secure_url, result.info.asset_id]]);
+                
+            }
+        })
+    },[products])
 
   return (
     <div className='sofa_light_dashboard_furniturestore_AddProduct'>
+        <>
+    <CButton style={{display: 'none'}} id="successbuttonIdEdit" onClick={() => addToast(successToast)}>Send a toast</CButton>
+    <CToaster ref={success} push={toast} placement="top-end" />
+
+    <CButton style={{display: 'none'}} id="failurebuttonIdEdit" onClick={() => addToast(failureToast)}>Send a toast</CButton>
+    <CToaster ref={failure} push={toast} placement="top-end" />
+
+    <CButton style={{display: 'none'}} id="emptyerrorbuttonIdEdit" onClick={() => addToast(emptyerrorbuttonId)}>Send a toast</CButton>
+    <CToaster ref={emptyError} push={toast} placement="top-end" />
+  </>
         <Titles title='About Product' />
         <Labels title='Product Name:' />
-        <TextField keepSync={val => setProductName(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_name" />
+        <TextField typ='edit' initVal={productName} keepSync={val => setProductName(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_name" />
         <Labels title='Sub Text:' />
-        <TextField  keepSync={val => setProductSubText(val)} id="sofa_light_dashboard_furniturestore_components_textfield_sub_text" />
+        <TextField typ='edit' initVal={productSubText} keepSync={val => setProductSubText(val)} id="sofa_light_dashboard_furniturestore_components_textfield_sub_text" />
         <Labels title='Category:' />
-        <TextField  keepSync={val => setProductCategory(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_category" />
+        <TextField typ='edit' initVal={productCategory} keepSync={val => setProductCategory(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_category" />
         <Labels title='Price:' />
-        <CustomTextField keepSync={val => setProductPrice(val)} id="sofa_light_dashboard_furniturestore_components_custom_text_field_1" />
+        <CustomTextField typ='edit' initVal={productPrice} keepSync={val => setProductPrice(val)} id="sofa_light_dashboard_furniturestore_components_custom_text_field_1" />
         <Labels title='Discount:' />
-        <CustomTextField keepSync={val => setProductDiscount(val)} id="sofa_light_dashboard_furniturestore_components_custom_text_field_2" />
+        <CustomTextField typ='edit' initVal={productDiscount} keepSync={val => setProductDiscount(val)} id="sofa_light_dashboard_furniturestore_components_custom_text_field_2" />
         <Labels title='Status:' />
         <RadioButton keepSync={val => setProductStatus(val)} val1="Published" val2="Draft" />
         <Labels title='Product Description:' />
-        <TextArea keepSync={val => setProductDescription(val)} id="sofa_light_dashboard_furniturestore_components_textarea_1" />
+        <TextArea typ='edit' initVal={productDescription} keepSync={val => setProductDescription(val)} id="sofa_light_dashboard_furniturestore_components_textarea_1" />
         <Labels title='Meta Title:' />
-        <TextField  keepSync={val => setProductMetaTitle(val)} id="sofa_light_dashboard_furniturestore_components_textfield_meta_title" />
+        <TextField typ='edit' initVal={productMetaTitle} keepSync={val => setProductMetaTitle(val)} id="sofa_light_dashboard_furniturestore_components_textfield_meta_title" />
         <Labels title='Meta Keyword:' />
-        <TextField  keepSync={val => setProductKeyword(val)} id="sofa_light_dashboard_furniturestore_components_textfield_meta_keyword" />
+        <TextField typ='edit' initVal={productKeyword} keepSync={val => setProductKeyword(val)} id="sofa_light_dashboard_furniturestore_components_textfield_meta_keyword" />
         <Titles title={`Product Images (${4-products.length})`} />
         <div onClick={handleClickUploadImage} id='sofa_light_dashboard_furniturestore_components_imageUpload_Id' className='sofa_light_dashboard_furniturestore_components_imageUpload'>
           <img src={upload} alt='upload' />
@@ -90,11 +165,15 @@ function handleChangeUploadImage() {
           {products.map((img, ky) => <ImageViewer clickedHandler={e => {
             products = products.filter(product => product[2]!==img[2])
             setProducts(products);
-          }} img={img[0]} key={ky} title={img[1]} />)}
+          }} img={img[1]} key={ky} title={img[0]} />)}
         </div>
 
         {/* save product */}
-        <ActionButton handleSave={async e => {
+        <EditActionButton handleSave={async e => {
+          if(productName===''||productSubText===''||productCategory===''||productPrice===''||productDiscount===''||productStatus===''||productDescription===''||productMetaTitle===''||productMetaTitle===''||productKeyword===''||products.length===0) {
+            document.getElementById("emptyerrorbuttonIdEdit").click();
+            return;
+          }
           let textInfo = {
             productName,
             productSubText,
@@ -106,14 +185,25 @@ function handleChangeUploadImage() {
             productMetaTitle,
             productKeyword
           }
-          /// how to send data to the back end.
-          if(await saveProduct(products, textInfo)) {
+          e.target.children[0].style.display = "block"
+          e.target.setAttribute("disabled","true")
+         
+          let saveStatus = await saveProduct(productInfos._id,products,textInfo)
+        
+          console.log("save status", saveStatus);
+          if(saveStatus === "updated") {
             // get ready to process next save
             setProducts([])
-            
+            e.target.children[0].style.display = "none"
+            document.getElementById("successbuttonIdEdit").click();
+            e.target.removeAttribute("disabled")
            
+          }else {
+            document.getElementById("failurebuttonIdEdit").click();
           }
-        }} />
+        }
+        }
+          />
     </div>
   )
 }

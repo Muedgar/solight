@@ -1,4 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
+import '@coreui/coreui/dist/css/coreui.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+import { CToast,CToastHeader,CToastBody,CButton,CToaster } from '@coreui/react';
 
 import Titles from '../components/titles/Titles'
 import Labels from '../components/labels/Labels'
@@ -31,37 +35,104 @@ function AddProduct() {
   let [productKeyword, setProductKeyword] = useState();
 
   function handleClickUploadImage() {
-    if(products.length===4) return;
-    console.log("clicked");
-    let fileInput = document.createElement('input');
-    fileInput.setAttribute('id', 'createProductInput');
-    fileInput.setAttribute('type', 'file');
-    fileInput.setAttribute('accept', 'image/png, image/jpeg');
-    fileInput.addEventListener('change',
-      handleChangeUploadImage
-    );
-    fileInput.style.display = "none";
-    document.getElementById("sofa_light_dashboard_furniturestore_components_product_images_div").appendChild(fileInput);
-    fileInput.click();
+    if(products.length >= 4) return;
+    widgetRef.current.open()
 }
 
-function handleChangeUploadImage() {
-  let id = "createProductInput";
-    let input = document.getElementById(id);
-    input.file = input.files[0];
-    var fReader = new FileReader();
-    fReader.readAsDataURL(input.files[0]);
-    // document.getElementById("fileId").value = input.files[0].name;
-    // console.log(input.files[0].name);
-    fReader.onloadend = function(event) {
-            setProducts([...products,[`${event.target.result}`,input.files[0].name,`${input.files[0].name}${products.length+1}`]]);
-            console.log("products",products);
-        }
-        document.getElementById("sofa_light_dashboard_furniturestore_components_product_images_div").removeChild(document.getElementById(id));
-}
 
+    const [toast, addToast] = useState(0)
+const success = useRef()
+const failure = useRef()
+const emptyError = useRef()
+const successToast = (
+  <CToast>
+    <CToastHeader closeButton>
+      <svg
+        className="rounded me-2"
+        width="20"
+        height="20"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+      >
+        <rect width="100%" height="100%" fill="green"></rect>
+      </svg>
+      <div className="fw-bold me-auto">Product Creation Status</div>
+      <small>Now</small>
+    </CToastHeader>
+    <CToastBody>Product created successfully.</CToastBody>
+  </CToast>
+)
+const failureToast = (
+  <CToast>
+    <CToastHeader closeButton>
+      <svg
+        className="rounded me-2"
+        width="20"
+        height="20"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+      >
+        <rect width="100%" height="100%" fill="red"></rect>
+      </svg>
+      <div className="fw-bold me-auto">Product Creation Status</div>
+      <small>Now</small>
+    </CToastHeader>
+    <CToastBody>Product not created. Refresh the page and try again.</CToastBody>
+  </CToast>
+)
+
+const emptyerrorbuttonId = (
+  <CToast>
+    <CToastHeader closeButton>
+      <svg
+        className="rounded me-2"
+        width="20"
+        height="20"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+        focusable="false"
+        role="img"
+      >
+        <rect width="100%" height="100%" fill="red"></rect>
+      </svg>
+      <div className="fw-bold me-auto">Product Creation Status</div>
+      <small>Now</small>
+    </CToastHeader>
+    <CToastBody>Some of products information are empty and you need to upload at least one image</CToastBody>
+  </CToast>
+)
+const cloudinaryRef = useRef();
+    const widgetRef = useRef();
+    useEffect(() => {
+        cloudinaryRef.current = window.cloudinary;
+        widgetRef.current = cloudinaryRef.current.createUploadWidget({
+            cloudName: process.env.REACT_APP_CLOUD_NAME,
+            uploadPreset: process.env.REACT_APP_UPLOAD_PRESET
+        }, function(error, result) {
+            if(!error && result && result.event === "success") {
+             console.log(result)
+                setProducts([...products, [result.info.original_filename, result.info.secure_url, result.info.public_id]]);
+                
+            }
+        })
+    },[products])
+    
   return (
     <div className='sofa_light_dashboard_furniturestore_AddProduct'>
+      <>
+    <CButton style={{display: 'none'}} id="successbuttonId" onClick={() => addToast(successToast)}>Send a toast</CButton>
+    <CToaster ref={success} push={toast} placement="top-end" />
+
+    <CButton style={{display: 'none'}} id="failurebuttonId" onClick={() => addToast(failureToast)}>Send a toast</CButton>
+    <CToaster ref={failure} push={toast} placement="top-end" />
+
+    <CButton style={{display: 'none'}} id="emptyerrorbuttonId" onClick={() => addToast(emptyerrorbuttonId)}>Send a toast</CButton>
+    <CToaster ref={emptyError} push={toast} placement="top-end" />
+  </>
         <Titles title='About Product' />
         <Labels title='Product Name:' />
         <TextField keepSync={val => setProductName(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_name" />
@@ -88,13 +159,22 @@ function handleChangeUploadImage() {
         </div>
         <div id='sofa_light_dashboard_furniturestore_components_product_images_div'>
           {products.map((img, ky) => <ImageViewer clickedHandler={e => {
+            
+            // delete image from cloudinary
+            
             products = products.filter(product => product[2]!==img[2])
             setProducts(products);
-          }} img={img[0]} key={ky} title={img[1]} />)}
+
+           
+          }} img={img[1]} key={ky} title={img[0]} />)}
         </div>
 
         {/* save product */}
         <ActionButton handleSave={async e => {
+          if(productName===''||productSubText===''||productCategory===''||productPrice===''||productDiscount===''||productStatus===''||productDescription===''||productMetaTitle===''||productMetaTitle===''||productKeyword===''||products.length===0) {
+            document.getElementById("emptyerrorbuttonId").click();
+            return;
+          }
           let textInfo = {
             productName,
             productSubText,
@@ -106,14 +186,23 @@ function handleChangeUploadImage() {
             productMetaTitle,
             productKeyword
           }
+          document.getElementById("saveProductStatusButtonId").style.display = "block"
+          document.getElementById("saveProductButtonId").setAttribute("disabled","true")
           /// how to send data to the back end.
-          if(await saveProduct(products, textInfo)) {
+          let saveStatus =await saveProduct(products, textInfo)
+          console.log("save status", saveStatus);
+          if(saveStatus === "saved") {
             // get ready to process next save
             setProducts([])
-            
+            document.getElementById("saveProductStatusButtonId").style.display = "none"
+            document.getElementById("successbuttonId").click();
+            document.getElementById("saveProductButtonId").removeAttribute("disabled")
            
+          }else {
+            document.getElementById("failurebuttonId").click();
           }
         }} />
+       
     </div>
   )
 }

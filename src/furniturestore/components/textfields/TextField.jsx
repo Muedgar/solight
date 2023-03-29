@@ -3,7 +3,8 @@ import React, {useState} from 'react'
 import './TextField.css'
 
 function TextField(props) {
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState(props.typ === 'edit'?props.initVal:'');
+  
   return (
     <div className='sofa_light_dashboard_furniturestore_components_textfield'>
         <input id={props.id} type="text" value={val} onChange={e => {

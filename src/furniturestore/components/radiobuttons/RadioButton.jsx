@@ -9,12 +9,15 @@ function RadioButton(props) {
         <input onClick={e => {
           setVal(props.val1);
           props.keepSync(props.val1);
+          
           console.log(val);
         }} type="radio" name='radio' />
         <label htmlFor="radio">{props.val1}</label>
         <input onClick={e => {
           setVal(props.val2);
           props.keepSync(props.val2);
+          
+          console.log(val);
         }} type="radio" name='radio' />
         <label htmlFor="radio">{props.val2}</label>
     </div>

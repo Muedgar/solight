@@ -2,16 +2,17 @@ import React, {useState, useEffect} from 'react'
 
 import './ProductPreview.css';
 
-import couch1 from './couch1.webp'
-import couch2 from './couch2.webp'
-import couch3 from './couch3.webp'
-import couch4 from './couch4.webp'
 
 import cart from './cart.svg'
+import formatPrice from './formatMoney';
 
 function ProductPreview(props) {
+ let role = props.role;
+  let productInfos = JSON.parse(localStorage.getItem('product_preview'))
+  let [buttonText, setButtonText] = useState('Add To Cart')
   let [count,setCount] = useState(1);
-  let [thumbnail, setThumnail] = useState(couch1);
+  let [thumbnail, setThumnail] = useState(productInfos.images[0][1]);
+  let beforeDiscount = Number(productInfos.productInfo.productPrice) + (Number(productInfos.productInfo.productPrice)*(Number(productInfos.productInfo.productDiscount)/100))
   useEffect(() => {
     function handleResize() {
       if(window.innerWidth>1000) {
@@ -34,28 +35,27 @@ function ProductPreview(props) {
                 <img src={thumbnail} alt='preview'/>
             </div>
             <div className='thumbnails'>
-                <div onClick={e=>setThumnail(couch1)}>
-                    <img src={couch1} alt='preview'/>
+                {
+                    productInfos.images.map((img,k) => (
+                <div key={k} onClick={e=>setThumnail(img[1])}>
+                    <img src={img[1]} alt='preview'/>
                 </div>
-                <div onClick={e=>setThumnail(couch2)}>
-                    <img src={couch2} alt='preview'/>
-                </div>
-                <div onClick={e=>setThumnail(couch3)}>
-                    <img src={couch3} alt='preview'/>
-                </div>
-                <div onClick={e=>setThumnail(couch4)}>
-                    <img src={couch4} alt='preview'/>
-                </div>
+                    ))
+                }
+                
+                
             </div>
         </div>
         <div className='sofa_light_dashboard_furniturestore_components_productpreview_description'>
-            <h1 className='productTitle'>Leo Sodales Varius</h1>
-            <h6 className='productBrand'><span>Brand : </span><span>Chair</span></h6>
-            <h4 className='productPrice'>200,000 RWF</h4>
-            <h5 className='productOriginalPrice'><span>434,000 RWF</span> <span>50% Off</span></h5>
-            <p className='productDetails'>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+            <h1 className='productTitle'>{productInfos.productInfo.productName}</h1>
+            <h6 className='productBrand'><span>Brand : </span><span>{productInfos.productInfo.productMetaTitle}</span></h6>
+            <h4 className='productPrice'>{formatPrice(productInfos.productInfo.productPrice)} RWF</h4>
+            <h5 className='productOriginalPrice'><span>{formatPrice(Math.floor(beforeDiscount))} RWF</span> <span>Before Discount</span></h5>
+            <p className='productDetails'>{productInfos.productInfo.productDescription}</p>
             <p className='productStatus'><span>Available: </span><span>In Stock</span></p>
-            <div className='productQuantity'><span>Quantity: </span> 
+            <p className='productCategory'><span>Category: </span><span>{productInfos.productInfo.productCategory}</span></p>
+            
+            <div className={role==='admin'?'hide':'productQuantity'}><span>Quantity: </span> 
                 <div>
                 <button 
                     onClick={e => count>1?setCount(--count):setCount(count)}>-</button>
@@ -63,12 +63,58 @@ function ProductPreview(props) {
                 <button onClick={e => setCount(++count)}>+</button>
                 </div>
             </div>
-            <div className='productActions'>
+            <div className={role==='admin'?'hide':'productActions'}>
                 <button>Order Now.</button>
-                <button><img src={cart} alt="cart" />Add to Cart.</button>
+                <button onClick={async e => {
+           
+           if(localStorage.getItem("cart_items")) {
+             // if cart items exist toggle the item
+             let items = JSON.parse(localStorage.getItem("cart_items"));
+            
+             // if items contains item
+             let itemStatus = "";
+             items.forEach(item => {
+               if(item.item_id === productInfos._id) {
+                 itemStatus = "found item"
+               }
+             });
+             if(itemStatus === "found item") {
+               items = items.filter(el => el.item_id!==productInfos._id)
+               let stringItems = JSON.stringify(items);
+               localStorage.setItem("cart_items",stringItems);
+               setButtonText("Add To Cart.")
+               e.target.removeAttribute('disabled')
+               return
+             }
+             // if item is new
+             let item = {item_img: productInfos.images[0][1],item_id: productInfos._id, item_name: productInfos.productInfo.productName, item_price: productInfos.productInfo.productPrice, item_quantity: count}
+             items.push(item)
+             let stringItems = JSON.stringify(items);
+             localStorage.setItem("cart_items",stringItems)
+           setButtonText("Item Added.")
+           e.target.removeAttribute('disabled')
+             return;
+           }else {
+             // else set cart items
+             let item = {item_img: productInfos.images[0][1],item_id: productInfos._id, item_name: productInfos.productInfo.productName, item_price: productInfos.productInfo.productPrice, item_quantity: count}
+             let items = []
+             items.push(item)
+             let stringItems = JSON.stringify(items);
+
+
+           localStorage.setItem("cart_items",stringItems)
+           setButtonText("Item Added.")
+           e.target.removeAttribute('disabled')
+           }
+           
+
+           
+
+
+           
+         }}><img src={cart} alt="cart" />{buttonText}</button>
             </div>        
-            <p className='productCategory'><span>Category: </span><span>Furniture</span></p>
-            <p className='productTags'><span>Tags: </span><span>Blue, Green, Light</span></p>
+            {/* <p className='productTags'><span>Tags: </span><span>Blue, Green, Light</span></p> */}
         </div>
     </div>
   )

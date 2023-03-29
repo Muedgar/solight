@@ -4,6 +4,7 @@
     border-radius: 10px;
     transition: all .3s ease-out;
     margin: 40px;
+    box-shadow: 10px 10px 20px 5px rgb(0 0 0 / 23%);
 }
 
 .sofa_light_dashboard_furniturestore_components_productadmin .productImg {
@@ -12,11 +13,14 @@
     background-color: black;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    
+}
+.sofa_light_dashboard_furniturestore_components_productadmin .productImg img {
+    width: 100%;
+    height: 100%;
 }
 
 .sofa_light_dashboard_furniturestore_components_productadmin:hover {
-    box-shadow: 10px 10px 20px 5px rgb(0 0 0 / 23%);
+    box-shadow: none;
     transform: translateX(-10px);
 }
 
@@ -42,7 +46,7 @@
     border: 1.5px solid gray;
     border-radius: 5px;
 }
-.sofa_light_dashboard_furniturestore_components_productadmin .productDesc button:nth-child(2) {
+.sofa_light_dashboard_furniturestore_components_productadmin .productDesc button:nth-child(3) {
     background-color: rgb(133, 9, 9);
     color: white;
     border: none;

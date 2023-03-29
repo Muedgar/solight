@@ -4,7 +4,7 @@ import './Brands.css'
 
 function Brands() {
   const [checked, setChecked] = useState(['cup'])
-  const brands = [['Cup',25], ['Plate',25], ['Chair',25], ['Juice',25]]
+  const brands = [['Kitchen Cabinets',25], ['Office Desks',25], ['Sofas',25], ['Dining Tables',25]]
   const getChecked = (b) => {
     for(let i=0;i<checked.length;i++) {
       if(checked[i] === b) {
@@ -32,7 +32,8 @@ function Brands() {
                     }} checked={getChecked(brand[0])} />
                     <span className="checkmark"></span>
                   </label>
-                  <span>({brand[1]})</span></li>
+                  {/* <span>({brand[1]})</span> */}
+                  </li>
             ))}
         </ul>
     </div>

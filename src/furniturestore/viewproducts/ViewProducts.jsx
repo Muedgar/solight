@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import Brands from '../components/brands/Brands'
 import Category from '../components/category/Category'
 import PriceRange from '../components/pricerange/PriceRange'
-import Product from '../components/product/Product'
 // import ProductAdmin from '../components/productadmin/ProductAdmin'
 import Search from '../components/search/Search'
 import SortBy from '../components/sortby/SortBy'
@@ -10,9 +9,18 @@ import SortBy from '../components/sortby/SortBy'
 import './ViewProducts.css'
 
 import filter from './filter.svg'
+import GetProducts from './getProducts'
 
 function ViewProducts() {
-  let [filterMenu, setFilterMenu] = useState(true)
+  
+  let [filterMenu, setFilterMenu] = useState(false)
+  let [filterVal, setFilterVal] = useState({
+    search: '',
+    sort: '',
+    price: '',
+    category: 'all',
+    brands: []
+  })
 
   useEffect(() => {
     function handleResize() {
@@ -47,16 +55,18 @@ function ViewProducts() {
       </div>
         <PriceRange min={50000} max={2000000} />
         <Category />
+        
         <Brands />
         </div>
         <div>
           <Search />
           <SortBy />
           <div className='products_show'>
+            {/* <Product productname='Dinner Table' productprice='55,000'/>
             <Product productname='Dinner Table' productprice='55,000'/>
             <Product productname='Dinner Table' productprice='55,000'/>
-            <Product productname='Dinner Table' productprice='55,000'/>
-            <Product productname='Dinner Table' productprice='55,000'/>
+            <Product productname='Dinner Table' productprice='55,000'/> */}
+            <GetProducts filter={filterVal} />
           </div>
         </div>
     </div>

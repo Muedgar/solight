@@ -1,3 +1,6 @@
+.hide {
+    display: none;
+}
 .sofa_light_dashboard_furniturestore_components_productpreview {
     width: 80vw;
     height: fit-content;
