@@ -10,12 +10,23 @@ import './Dashboard.css'
 import { AddProduct, EditProduct, Orders, ProductDetails, ViewProductsAdmin } from '../furniturestore/FurnitureStore';
 import ErrorBoundary from './ErrorBoundary';
 import ErrorMessage from './ErrorMessage';
+import Signin from './Signin';
+import Settings from './Settings';
+
 
 function Dashboard() {
   const [open, setOpen] = useState(true)
   return (
+    <>
+    <BrowserRouter>
+    <Routes>
+                    <Route path='/' element={
+                        <ErrorBoundary fallback={<ErrorMessage message="Can not connect to service. Please contact support. Thank you!" />}>
+                            <Signin />
+                        </ErrorBoundary>
+                    } />
+                    </Routes>
     <div className='dashboard'>
-        <BrowserRouter>
         <nav className='dashboard_navbar'>
             <div className='dashboard_navbar_logo_menu_position'>
                 <img className='dashboard_navbar_logo' src={logo} alt="logo" />
@@ -28,8 +39,16 @@ function Dashboard() {
                     <p>Welcome Admin!</p>
                     <img className='dashboard_navbar_caret' src={caretdown} alt="caretdown" />
                     <div className='dashboard_navbar_admin_profile_content'>
-                    <p><img className='dashboard_navbar_admin_profile_img' src={gear} alt="gear" /><span>Settings</span></p>
-                    <button><img className='dashboard_navbar_admin_profile_img' src={rightfrombracket} alt="right from bracket" /><span>Sign Out</span></button>
+                    <NavLink style={{textDecoration: 'none'}} to="/sofaadmin/settings">
+                    <p><img className='dashboard_navbar_admin_profile_img' src={gear} alt="gear" /><span style={{color: 'black'}}>Settings</span></p>
+                    </NavLink>
+                    <button onClick={async e => {
+                        await fetch("http://localhost:3002/sofalight/backend/api/logout",{credentials: 'include'})
+                        .then(d => d.json())
+                        .then(d => {
+                            window.location = "/"
+                        }).catch(e => console.log(e))
+                    }}><img className='dashboard_navbar_admin_profile_img' src={rightfrombracket} alt="right from bracket" /><span>Sign Out</span></button>
                 </div>
                 </div>
                 
@@ -41,12 +60,12 @@ function Dashboard() {
                 <p>Furniture Store</p>
                 <ul>
                 <NavLink
-                  to='/'>
+                  to='/sofaadmin/'>
                     <li>Products</li>
                   </NavLink>
 
                   <NavLink
-                  to='/addproduct'>
+                  to='/sofaadmin/addproduct'>
                     <li>Add Product</li>
                   </NavLink>
 
@@ -61,7 +80,7 @@ function Dashboard() {
                   </NavLink> */}
 
                   <NavLink
-                  to='/orders'>
+                  to='/sofaadmin/orders'>
                     <li>Orders</li>
                   </NavLink>
                     
@@ -70,45 +89,52 @@ function Dashboard() {
                 <h1>MANAGE</h1>
                 <ul>
                 <NavLink
-                  to='/'>
+                  to='/sofaadmin/settings'>
                     <li>Settings</li>
                   </NavLink>
                 </ul>
             </aside>
             <div className='dashboard_navbar_admin_content'>
                 <Routes>
-                    <Route path='/' element={
+                    <Route path='/sofaadmin/' element={
                         <ErrorBoundary fallback={<ErrorMessage message="Can not connect to service. Please contact support. Thank you!" />}>
                             <ViewProductsAdmin />
                         </ErrorBoundary>
                     } />
-                    <Route path='/viewproducts' element={
+                    <Route path='/sofaadmin/viewproducts' element={
                         <ErrorBoundary fallback={<p>Something went wrong</p>}>
                             <ViewProductsAdmin />
                         </ErrorBoundary>
                     } />
-                    <Route path='/addproduct' element={<AddProduct/>} />
-                    <Route path='/editproduct' element={
+                    <Route path='/sofaadmin/addproduct' element={<AddProduct/>} />
+                    <Route path='/sofaadmin/editproduct' element={
                     <ErrorBoundary fallback={<ErrorMessage message="Click on an edit button of a product to edit product information." />}>
                     <EditProduct/>
                 </ErrorBoundary>
                     } />
-                    <Route path='/productdetails' element={
+                    <Route path='/sofaadmin/productdetails' element={
                         <ErrorBoundary fallback={<ErrorMessage message="Click on an image of a product to view more product information." />}>
                             <ProductDetails role="admin"/>
                         </ErrorBoundary>
                     } />
 
-                  <Route path='/orders' element={
+                  <Route path='/sofaadmin/orders' element={
                         <ErrorBoundary fallback={<ErrorMessage message="Can not connect to service. Please contact support. Thank you!" />}>
                             <Orders />
+                        </ErrorBoundary>
+                    } />
+
+                <Route path='/sofaadmin/settings' element={
+                        <ErrorBoundary fallback={<ErrorMessage message="Can not connect to service. Please contact support. Thank you!" />}>
+                            <Settings />
                         </ErrorBoundary>
                     } />
                 </Routes>
             </div>
         </div>
-        </BrowserRouter>
     </div>
+        </BrowserRouter>
+    </>
   )
 }
 

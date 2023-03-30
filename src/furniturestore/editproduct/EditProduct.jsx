@@ -21,6 +21,28 @@ import EditActionButton from '../components/actionbuttons/EditActionButton'
 import saveProduct from './saveProduct'
 
 function EditProduct() {
+  let checkLogin = 'check'
+  useEffect(() => {
+      async function getUser() {
+          await fetch("http://localhost:3002/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+          .then(d => d.json())
+          .then(d => {
+              console.log(d);
+              if(d.user === "Not Logged in") {
+                  console.log(d, "not logged in")
+                  window.location = "/"
+                  return
+              }
+              document.getElementById("preloaderScreenEditProduct").style.display = "none"
+            })
+          .catch(e => {
+              console.log("error")
+          })
+      }
+      if(checkLogin === 'check') {
+          getUser()
+      }
+  },[checkLogin])
 
 
   
@@ -126,6 +148,12 @@ const cloudinaryRef = useRef();
     },[products])
 
   return (
+    <>
+    <div id="preloaderScreenEditProduct">
+      <div className='loader'>
+        <div className='inner-loader'></div>
+      </div>
+    </div>
     <div className='sofa_light_dashboard_furniturestore_AddProduct'>
         <>
     <CButton style={{display: 'none'}} id="successbuttonIdEdit" onClick={() => addToast(successToast)}>Send a toast</CButton>
@@ -205,6 +233,7 @@ const cloudinaryRef = useRef();
         }
           />
     </div>
+    </>
   )
 }
 

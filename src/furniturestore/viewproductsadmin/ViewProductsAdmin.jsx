@@ -26,6 +26,33 @@ function ViewProductsAdmin() {
   let [filterValCategory,setFilterValCategory] = useState('All')
   
 
+////// handle unauthorized access
+
+let checkLogin = 'check'
+    useEffect(() => {
+        async function getUser() {
+            await fetch("http://localhost:3002/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            .then(d => d.json())
+            .then(d => {
+                console.log(d);
+                if(d.user === "Not Logged in") {
+                    console.log(d, "not logged in")
+                    window.location = "/"
+                    return
+                }
+                document.getElementById("preloaderScreenViewProductsAdmin").style.display = "none";
+              })
+            .catch(e => {
+                console.log("error")
+            })
+        }
+        if(checkLogin === 'check') {
+            getUser()
+        }
+    },[checkLogin])
+
+////// end handling unauthorized access
+
   useEffect(() => {
     function handleResize() {
       if(window.innerWidth>1263) {
@@ -70,9 +97,9 @@ function ViewProductsAdmin() {
       for(let i=0;i<inData.length;i++) {
         for(let j=i+1;j<inData.length;j++) {
           if(Number(inData[i].productInfo.productPrice) < Number(inData[j].productInfo.productPrice)) {
-            let temp = inData[i].productInfo.productPrice
-            inData[i].productInfo.productPrice = inData[j].productInfo.productPrice
-            inData[j].productInfo.productPrice = temp;
+            let temp = inData[i]
+            inData[i] = inData[j]
+            inData[j] = temp;
           }
         }
       }
@@ -80,9 +107,9 @@ function ViewProductsAdmin() {
       for(let i=0;i<inData.length;i++) {
         for(let j=i+1;j<inData.length;j++) {
           if(Number(inData[i].productInfo.productPrice) > Number(inData[j].productInfo.productPrice)) {
-            let temp = inData[j].productInfo.productPrice
-            inData[j].productInfo.productPrice = inData[i].productInfo.productPrice
-            inData[i].productInfo.productPrice = temp;
+            let temp = inData[j]
+            inData[j] = inData[i]
+            inData[i] = temp;
           }
         }
       }
@@ -92,6 +119,12 @@ function ViewProductsAdmin() {
     return inData;
   }
   return (
+    <>
+    <div id="preloaderScreenViewProductsAdmin">
+      <div className='loader'>
+        <div className='inner-loader'></div>
+      </div>
+    </div>
     <div className='sofa_light_dashboard_furniturestore_components_viewproducts'>
        <button className='filter_menu' onClick={e => {
             let div = document.querySelector(".sofa_light_dashboard_furniturestore_components_viewproducts_left");
@@ -188,6 +221,7 @@ function ViewProductsAdmin() {
           </div>
         </div>
     </div>
+    </>
   )
 }
 

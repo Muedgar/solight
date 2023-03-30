@@ -3,14 +3,37 @@ import React, {useState, useEffect} from 'react'
 import "../components/carttable/CartTable.css"
 
 
-
+import './Orders.css'
 
 function Orders() {
+    let checkLogin = 'check'
+    useEffect(() => {
+        async function getUser() {
+            await fetch("http://localhost:3002/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            .then(d => d.json())
+            .then(d => {
+                console.log(d);
+                if(d.user === "Not Logged in") {
+                    console.log(d, "not logged in")
+                    window.location = "/"
+                    return
+                }
+                document.getElementById("preloaderScreenOrdersProduct").style.display = "none"
+              })
+            .catch(e => {
+                console.log("error")
+            })
+        }
+        if(checkLogin === 'check') {
+            getUser()
+        }
+    },[checkLogin])
+
     const [data, setData] = useState([])
     let getDataStatus = "get"
     useEffect(() => {
         async function getData() {
-          let result = await fetch("http://localhost:3002/sofalight/backend/api/products/order")
+          let result = await fetch("http://localhost:3002/sofalight/backend/api/products/order",{credentials: 'include'})
           .then(d => d.json())
           .then(d => d).catch(e => 
               {
@@ -25,6 +48,11 @@ function Orders() {
     
   return (
     <>
+    <div id="preloaderScreenOrdersProduct">
+      <div className='loader'>
+        <div className='inner-loader'></div>
+      </div>
+    </div>
     <div className='sofa_light_dashboard_furniturestore_components_carttable'>
         <table>
             <thead>
