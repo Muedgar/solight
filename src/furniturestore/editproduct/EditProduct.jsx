@@ -137,10 +137,10 @@ const cloudinaryRef = useRef();
     <CButton style={{display: 'none'}} id="emptyerrorbuttonIdEdit" onClick={() => addToast(emptyerrorbuttonId)}>Send a toast</CButton>
     <CToaster ref={emptyError} push={toast} placement="top-end" />
   </>
-        <Titles title='About Product' />
+        <Titles title='About Product (Edit)' />
         <Labels title='Product Name:' />
         <TextField typ='edit' initVal={productName} keepSync={val => setProductName(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_name" />
-        <Labels title='Sub Text:' />
+        <Labels title='Brand:' />
         <TextField typ='edit' initVal={productSubText} keepSync={val => setProductSubText(val)} id="sofa_light_dashboard_furniturestore_components_textfield_sub_text" />
         <Labels title='Category:' />
         <TextField typ='edit' initVal={productCategory} keepSync={val => setProductCategory(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_category" />

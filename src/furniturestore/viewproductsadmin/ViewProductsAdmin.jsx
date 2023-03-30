@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useCallback} from 'react'
-import Brands from '../components/brands/Brands'
-import Category from '../components/category/Category'
+import React, {useState, useEffect} from 'react'
+// import Brands from '../components/brands/Brands'
+// import Category from '../components/category/Category'
 // import PriceRange from '../components/pricerange/PriceRange'
-import Search from '../components/search/Search'
-import SortBy from '../components/sortby/SortBy'
+// import Search from '../components/search/Search'
+// import SortBy from '../components/sortby/SortBy'
 import ProductAdmin from '../components/productadmin/ProductAdmin';
 import formatPrice from './formatMoney';
 import './ViewProductsAdmin.css'
@@ -11,24 +11,20 @@ import './ViewProductsAdmin.css'
 import filter from './filter.svg'
 
 import '../components/pricerange/PriceRange.css'
-
+import '../components/category/Category.css'
+import '../components/brands/Brands.css'
+import '../components/search/Search.css'
+import '../components/sortby/SortBy.css'
 
 function ViewProductsAdmin() {
   let [filterMenu, setFilterMenu] = useState(false)
   const [data, setData] = useState([])
   let getDataStatus = "get"
   let [filterValPrice, setFilterValPrice] = useState(2000000)
-
-  // const updateData = useCallback(() => {
-  //   console.log("filter val changed", filterValPrice);
-   
-  //   setData(data.filter(d => Number(d.productInfo.productPrice)<filterValPrice)) 
-  // },[filterValPrice])
- 
-
-  // useEffect(() => {
-  //   updateData()
-  // },[updateData])
+  const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Dining',25], ['Bed rooms',25], ['Doors',25]]
+  
+  let [filterValCategory,setFilterValCategory] = useState('All')
+  
 
   useEffect(() => {
     function handleResize() {
@@ -45,12 +41,7 @@ function ViewProductsAdmin() {
     window.addEventListener('resize', handleResize)
   })
 
-  // const getPriceRangeValUpdateProducts = (element) => {
-    
-  //   filterValPrice = String(element)
-  //   let newFilterValPrice = filterValPrice
-  //   setFilterValPrice(newFilterValPrice)
-  // }
+
 
   useEffect(() => {
     async function getData() {
@@ -64,9 +55,42 @@ function ViewProductsAdmin() {
     }
     
     getData()
-    console.log("running getData() useEffect")
+    
   },[getDataStatus]);
 
+
+  // search
+  const [filterSearchVal, setFilterSearchVal] = useState('')
+
+  // sort
+  const [activeSort, setActiveSort] = useState('Highest Price')
+  
+  function sortDataBy(inData) {
+    if(activeSort === 'Highest Price') {
+      for(let i=0;i<inData.length;i++) {
+        for(let j=i+1;j<inData.length;j++) {
+          if(Number(inData[i].productInfo.productPrice) < Number(inData[j].productInfo.productPrice)) {
+            let temp = inData[i].productInfo.productPrice
+            inData[i].productInfo.productPrice = inData[j].productInfo.productPrice
+            inData[j].productInfo.productPrice = temp;
+          }
+        }
+      }
+    }else if(activeSort === 'Lowest Price') {
+      for(let i=0;i<inData.length;i++) {
+        for(let j=i+1;j<inData.length;j++) {
+          if(Number(inData[i].productInfo.productPrice) > Number(inData[j].productInfo.productPrice)) {
+            let temp = inData[j].productInfo.productPrice
+            inData[j].productInfo.productPrice = inData[i].productInfo.productPrice
+            inData[i].productInfo.productPrice = temp;
+          }
+        }
+      }
+    }
+
+    console.log('before reverse',inData)
+    return inData;
+  }
   return (
     <div className='sofa_light_dashboard_furniturestore_components_viewproducts'>
        <button className='filter_menu' onClick={e => {
@@ -96,20 +120,65 @@ function ViewProductsAdmin() {
             <span>{formatPrice(filterValPrice)} RWF</span>
         </p>
     </div>
-        <Category />
-        <Brands />
+        {/* <Category /> */}
+        <div className='sofa_light_dashboard_furniturestore_components_category'>
+        <p className='sizeOne'>Category </p>
+        <span style={{marginLeft: '20px', fontSize: '12px', backgroundColor:'black', color: 'white',padding: '5px'}}>Double Click on Category</span>
+        
+        <ul>
+            {categories.map((category,ky) => (
+                <li onClick={e => {
+                  setFilterValCategory(category[0]);
+                  console.log(filterValCategory)
+                }} className='sizeTwo' key={ky}><span>{category[0]}</span>
+                {/* <span>({category[1]})</span> */}
+                </li>
+            ))}
+        </ul>
+    </div>
+        {/* <Brands /> */}
+        
         </div>
         <div>
-          <Search />
-          <SortBy />
+          {/* <Search /> */}
+          <div className='sofa_light_dashboard_furniturestore_components_search'>
+        <input type="text" value={filterSearchVal} onChange={e => setFilterSearchVal(e.target.value)}  placeholder='Search'/>
+        <div>
+          {/* <img onClick={e => {
+            setSearchStatus(true)
+          }} src={search} alt='search' /> */}
+        </div>
+    </div>
+          {/* <SortBy /> */}
+          <div className='sofa_light_dashboard_furniturestore_components_sortby'>
+        <p>Sort By: </p>
+        <p>
+          <span onClick={e => setActiveSort('Highest Price')} 
+          className={activeSort==='Highest Price'?'sofa_light_dashboard_furniturestore_components_sortby_active':''}>Highest Price</span>
+          <span onClick={e => setActiveSort('Lowest Price')} 
+          className={activeSort==='Lowest Price'?'sofa_light_dashboard_furniturestore_components_sortby_active':''}>Lowest Price</span>
+          {/* <span onClick={e => setActive('price')} 
+          className={active==='price'?'sofa_light_dashboard_furniturestore_components_sortby_active':''}>Price</span> */}
+          </p>
+    </div>
           <div className='products_show'>
           <>
             {data.length>0? 
-            data.map((d,k) => {
+            
+            sortDataBy(data).map((d,k) => {
               if(Number(d.productInfo.productPrice)<filterValPrice) {
-                return(
-                  <ProductAdmin productData={d} id={d._id} key={k} src={d.images[0][1]} productname={d.productInfo.productName} productprice={formatPrice(d.productInfo.productPrice)}/>
-                )
+                // the first thing to consider is product price
+                // the second thing to consider is product category,
+                if((filterValCategory.toLowerCase() === "all") || (d.productInfo.productCategory.toLowerCase() === filterValCategory.toLowerCase())) {
+                  console.log(filterSearchVal.trim())
+                  if(filterSearchVal.trim()==='' || d.productInfo.productName.toLowerCase().includes(filterSearchVal.toLowerCase().trim())) {
+                    return(
+                      <ProductAdmin productData={d} id={d._id} key={k} src={d.images[0][1]} productname={d.productInfo.productName} productprice={formatPrice(d.productInfo.productPrice)}/>
+                    )
+                  }
+                  
+                }
+                
               }
               return <div key={k}></div>
             }):

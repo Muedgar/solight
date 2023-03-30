@@ -61,7 +61,7 @@
     box-shadow: 0 6px 6px 0px #b8b8b899;
 }
 .sofa_light_dashboard_furniturestore_components_carttable thead tr th:nth-child(1) {
-    width: 45%;
+    width: 35%;
 }
 
 .sofa_light_dashboard_furniturestore_components_carttable tbody tr td:nth-child(1) {

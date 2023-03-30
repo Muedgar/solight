@@ -7,7 +7,7 @@ import gear from './assets/gear.svg'
 import rightfrombracket from './assets/rightfrombracket.svg'
 
 import './Dashboard.css'
-import { AddProduct, EditProduct, ProductDetails, ViewProductsAdmin } from '../furniturestore/FurnitureStore';
+import { AddProduct, EditProduct, Orders, ProductDetails, ViewProductsAdmin } from '../furniturestore/FurnitureStore';
 import ErrorBoundary from './ErrorBoundary';
 import ErrorMessage from './ErrorMessage';
 
@@ -61,7 +61,7 @@ function Dashboard() {
                   </NavLink> */}
 
                   <NavLink
-                  to='/'>
+                  to='/orders'>
                     <li>Orders</li>
                   </NavLink>
                     
@@ -96,6 +96,12 @@ function Dashboard() {
                     <Route path='/productdetails' element={
                         <ErrorBoundary fallback={<ErrorMessage message="Click on an image of a product to view more product information." />}>
                             <ProductDetails role="admin"/>
+                        </ErrorBoundary>
+                    } />
+
+                  <Route path='/orders' element={
+                        <ErrorBoundary fallback={<ErrorMessage message="Can not connect to service. Please contact support. Thank you!" />}>
+                            <Orders />
                         </ErrorBoundary>
                     } />
                 </Routes>
