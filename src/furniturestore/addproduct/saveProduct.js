@@ -3,7 +3,7 @@ async function saveProduct(data, textInfo) {
     let d = {productInfo: textInfo, images: data}
     /// make a post request.
     console.log("sending data ", d)
-   await fetch("http://localhost:3002/sofalight/backend/api/products/add", {
+   await fetch("https://sofaadminbackend.herokuapp.com/sofalight/backend/api/products/add", {
   method: "POST",
   credentials: 'include',
   headers: {

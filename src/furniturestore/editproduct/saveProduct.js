@@ -5,7 +5,7 @@ async function saveProduct(id,data, textInfo) {
     images:data
    }
     /// make a post request.
-   await fetch("http://localhost:3002/sofalight/backend/api/products/update/"+id, {
+   await fetch("https://sofaadminbackend.herokuapp.com/sofalight/backend/api/products/update/"+id, {
    credentials: 'include',
   method: "PUT",
   headers: {
