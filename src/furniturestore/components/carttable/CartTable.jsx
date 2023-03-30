@@ -9,7 +9,7 @@ import TextField from '../textfields/TextField'
 import CustomTextField from '../customtextfield/CustomTextField'
 import OrderButton from '../orderbutton/OrderButton';
 // async function getData() {
-//     let result = await fetch("http://localhost:3002/sofalight/backend/api/products/cart")
+//     let result = await fetch("https://sofaadminbackend.herokuapp.com/sofalight/backend/api/products/cart")
 //          .then(d => d.json())
 //          .then(d => d).catch(e => console.log(e));
             
