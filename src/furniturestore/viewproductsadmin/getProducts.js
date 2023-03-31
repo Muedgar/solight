@@ -9,7 +9,7 @@ const GetProducts = (props) => {
     useEffect(() => {
         async function getData() {
             if("all" === props.filter.category) { // instead of handling each filter item, take all parameters into consideration
-                let result = await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/products")
+                let result = await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/products")
                 .then(d => d.json())
                 .then(d => d).catch(e => 
                     {
