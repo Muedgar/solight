@@ -213,7 +213,7 @@ let checkLogin = 'check'
                 }
                 
               }
-              return <div key={k}></div>
+              return <div style={{display: 'none'}} key={k}></div>
             }):
             <h1>Loading products ...</h1>   
         }
