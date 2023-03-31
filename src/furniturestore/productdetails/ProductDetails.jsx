@@ -7,7 +7,7 @@ function ProductDetails(props) {
   let checkLogin = 'check'
     useEffect(() => {
         async function getUser() {
-            await fetch("https://sofaadminbackend.herokuapp.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
             .then(d => d.json())
             .then(d => {
                 console.log(d);

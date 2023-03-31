@@ -9,7 +9,7 @@ function Orders() {
     let checkLogin = 'check'
     useEffect(() => {
         async function getUser() {
-            await fetch("https://sofaadminbackend.herokuapp.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
             .then(d => d.json())
             .then(d => {
                 console.log(d);
@@ -33,7 +33,7 @@ function Orders() {
     let getDataStatus = "get"
     useEffect(() => {
         async function getData() {
-          let result = await fetch("https://sofaadminbackend.herokuapp.com/sofalight/backend/api/products/order",{credentials: 'include'})
+          let result = await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/products/order",{credentials: 'include'})
           .then(d => d.json())
           .then(d => d).catch(e => 
               {
