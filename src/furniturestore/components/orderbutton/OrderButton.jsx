@@ -32,7 +32,7 @@ function OrderButton(props) {
      // console.log(productData, userData)
      let bdy = {orderInfo: [productData, userData]}
 
-     await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/products/order", {
+     await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/products/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

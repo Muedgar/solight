@@ -43,7 +43,7 @@ function Dashboard() {
                     <p><img className='dashboard_navbar_admin_profile_img' src={gear} alt="gear" /><span style={{color: 'black'}}>Settings</span></p>
                     </NavLink>
                     <button onClick={async e => {
-                        await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/logout",{credentials: 'include'})
+                        await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/logout",{credentials: 'include'})
                         .then(d => d.json())
                         .then(d => {
                             window.location = "/"

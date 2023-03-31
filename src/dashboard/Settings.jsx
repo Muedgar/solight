@@ -9,7 +9,7 @@ function Settings() {
   let checkLogin = 'check'
     useEffect(() => {
         async function getUser() {
-            await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
             .then(d => d.json())
             .then(d => {
                 console.log(d);
@@ -48,7 +48,7 @@ function Settings() {
             <button onClick={async e => {
                 e.target.innerHTML = 'Changing Password ...'
                 
-                await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/changePassword",{
+                await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/changePassword",{
                     method: 'POST',
                     credentials: 'include',
                     headers: {

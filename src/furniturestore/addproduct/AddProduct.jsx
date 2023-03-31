@@ -26,7 +26,7 @@ function AddProduct() {
   let checkLogin = 'check'
     useEffect(() => {
         async function getUser() {
-            await fetch("http://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
             .then(d => d.json())
             .then(d => {
                 console.log(d);
