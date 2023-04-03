@@ -69,3 +69,18 @@
     height: 200px;
     background-color: antiquewhite;
 }
+
+.activeToDelete {
+    background-color: antiquewhite;
+}
+
+.deleteOrdersButton {
+    background-color: transparent;
+    border: 3px solid black;
+    padding: 5px
+}
+
+.deleteOrdersButton:hover {
+    background-color: black;
+    color: white;
+}
