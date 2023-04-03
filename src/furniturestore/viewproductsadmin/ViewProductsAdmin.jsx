@@ -21,7 +21,7 @@ function ViewProductsAdmin() {
   const [data, setData] = useState([])
   let getDataStatus = "get"
   let [filterValPrice, setFilterValPrice] = useState(2000000)
-  const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Dining',25], ['Bed rooms',25], ['Doors',25]]
+  const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Partitions',25], ['Bed rooms',25], ['Doors',25],['Ceiling',25],['Mattress',25],['Painting',25]]
   
   let [filterValCategory,setFilterValCategory] = useState('All')
   
@@ -146,9 +146,9 @@ let checkLogin = 'check'
         <p style={{paddingTop: '20px'}} className='sizeOne'>Price Range</p>
         <input className='slider' type="range" value={filterValPrice} onChange={e => {
             setFilterValPrice(e.target.value)
-        }} min={`${50000}`} max={`${2000000}`}/>
+        }} min={`${10000}`} max={`${3000000}`}/>
         <p className='sizeTwo'>
-            <span>{formatPrice('50000')} RWF</span>
+            <span>{formatPrice('10000')} RWF</span>
             -
             <span>{formatPrice(filterValPrice)} RWF</span>
         </p>

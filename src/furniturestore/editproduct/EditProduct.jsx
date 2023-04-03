@@ -13,7 +13,7 @@ import TextArea from '../components/textarea/TextArea'
 import RadioButton from '../components/radiobuttons/RadioButton'
 import CustomTextField from '../components/customtextfield/CustomTextField'
 import ImageViewer from '../components/imageviewer/ImageViewer'
-
+import ComboBox from '../components/combobox/ComboBox'
 import "../components/imageuploader/ImageUpload.css"
 import upload from "../components/imageuploader/upload.svg"
 import EditActionButton from '../components/actionbuttons/EditActionButton'
@@ -171,7 +171,7 @@ const cloudinaryRef = useRef();
         <Labels title='Brand:' />
         <TextField typ='edit' initVal={productSubText} keepSync={val => setProductSubText(val)} id="sofa_light_dashboard_furniturestore_components_textfield_sub_text" />
         <Labels title='Category:' />
-        <TextField typ='edit' initVal={productCategory} keepSync={val => setProductCategory(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_category" />
+        <ComboBox typ='edit' initVal={productCategory} keepSync={val => setProductCategory(val)} id="sofa_light_dashboard_furniturestore_components_textfield_product_category" />
         <Labels title='Price:' />
         <CustomTextField typ='edit' initVal={productPrice} keepSync={val => setProductPrice(val)} id="sofa_light_dashboard_furniturestore_components_custom_text_field_1" />
         <Labels title='Discount:' />
