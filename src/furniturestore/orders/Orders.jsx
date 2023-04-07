@@ -13,7 +13,7 @@ function Orders() {
 
     useEffect(() => {
         async function getUser() {
-            await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
             .then(d => d.json())
             .then(d => {
                 if(d.user === "Not Logged in") {
@@ -36,7 +36,7 @@ function Orders() {
     let getDataStatus = "get"
     useEffect(() => {
         async function getData() {
-          let result = await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/products/order",{credentials: 'include'})
+          let result = await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/order",{credentials: 'include'})
           .then(d => d.json())
           .then(d => d).catch(e => 
               {
@@ -75,7 +75,7 @@ function Orders() {
             d.push(data)
         })
         
-        await fetch("https://backend.sofalightbusiness.com/sofalight/backend/api/products/orders/deleteOne", {
+        await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/orders/deleteOne", {
   method: "DELETE",
   credentials: 'include',
   headers: {
