@@ -84,13 +84,16 @@
     position: absolute;
     width: 250px;
     margin-right: 50px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: flex-start;
     background-color: white;
     box-shadow: 0 0 10px 10px rgba(219, 219, 219, 0.321);
     z-index: 100;
     overflow: hidden;
+}
+.displayFlex {
+    display: flex;
 }
 .sofa_light_dashboard_furniturestore_components_viewproducts_filter_title {
     width: 100%;

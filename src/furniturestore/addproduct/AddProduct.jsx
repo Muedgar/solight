@@ -134,7 +134,7 @@ const emptyerrorbuttonId = (
 const cloudinaryRef = useRef();
     const widgetRef = useRef();
     useEffect(() => {
-        cloudinaryRef.current = window.cloudinary;
+       cloudinaryRef.current = window.cloudinary;
         widgetRef.current = cloudinaryRef.current.createUploadWidget({
             cloudName: process.env.REACT_APP_CLOUD_NAME,
             uploadPreset: process.env.REACT_APP_UPLOAD_PRESET
