@@ -13,7 +13,7 @@ function Settings() {
             .then(d => d.json())
             .then(d => {
                 console.log(d);
-                if(d.user === "Not Logged in") {
+                if(d.user === "Not Logged in"||d.user==="Couldn't get user data") {
                     console.log(d, "not logged in")
                     window.location = "/"
                     return
