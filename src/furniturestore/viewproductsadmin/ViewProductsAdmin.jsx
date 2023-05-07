@@ -20,7 +20,7 @@ function ViewProductsAdmin() {
   let [filterMenu, setFilterMenu] = useState(true)
   const [data, setData] = useState([])
   let getDataStatus = "get"
-  let [filterValPrice, setFilterValPrice] = useState(20000000000000000)
+  let [filterValPrice, setFilterValPrice] = useState(3000000)
   const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Partitions',25], ['Bed rooms',25], ['Doors',25],['Ceiling',25],['Mattress',25],['Painting',25]]
   
   let [filterValCategory,setFilterValCategory] = useState('All')
@@ -192,11 +192,15 @@ let checkLogin = 'check'
             {data.length>0? 
             
             sortDataBy(data).map((d,k) => {
-              if(Number(d.productInfo.productPrice)<filterValPrice) {
-                // the first thing to consider is product price
+              // if(Number(d.productInfo.productPrice)<filterValPrice) {
+                
+                
+              // }
+              
+              // the first thing to consider is product price
                 // the second thing to consider is product category,
                 if((filterValCategory.toLowerCase() === "all") || (d.productInfo.productCategory.toLowerCase() === filterValCategory.toLowerCase())) {
-                  console.log(filterSearchVal.trim())
+                 
                   if(filterSearchVal.trim()==='' || d.productInfo.productName.toLowerCase().includes(filterSearchVal.toLowerCase().trim())) {
                     return(
                       <ProductAdmin productData={d} id={d._id} key={k} src={d.images[0][1]} productname={d.productInfo.productName} productprice={formatPrice(d.productInfo.productPrice)}/>
@@ -204,9 +208,7 @@ let checkLogin = 'check'
                   }
                   
                 }
-                
-              }
-              return <div style={{display: 'none'}} key={k}></div>
+               return <div style={{display: 'none'}} key={k}></div>
             }):
             <h1>Loading products ...</h1>   
         }

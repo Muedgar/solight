@@ -57,8 +57,6 @@ function EditProduct() {
   let [productDiscount, setProductDiscount] = useState(productInfos.productInfo.productDiscount);
   let [productStatus, setProductStatus] = useState(productInfos.productInfo.productStatus);
   let [productDescription, setProductDescription] = useState(productInfos.productInfo.productDescription);
-  let [productMetaTitle, setProductMetaTitle] = useState(productInfos.productInfo.productMetaTitle);
-  let [productKeyword, setProductKeyword] = useState(productInfos.productInfo.productKeyword);
 
   function handleClickUploadImage() {
    if(products.length >= 4) return;
@@ -180,10 +178,6 @@ const cloudinaryRef = useRef();
         <RadioButton keepSync={val => setProductStatus(val)} val1="Published" val2="Draft" />
         <Labels title='Product Description:' />
         <TextArea typ='edit' initVal={productDescription} keepSync={val => setProductDescription(val)} id="sofa_light_dashboard_furniturestore_components_textarea_1" />
-        <Labels title='Meta Title:' />
-        <TextField typ='edit' initVal={productMetaTitle} keepSync={val => setProductMetaTitle(val)} id="sofa_light_dashboard_furniturestore_components_textfield_meta_title" />
-        <Labels title='Meta Keyword:' />
-        <TextField typ='edit' initVal={productKeyword} keepSync={val => setProductKeyword(val)} id="sofa_light_dashboard_furniturestore_components_textfield_meta_keyword" />
         <Titles title={`Product Images (${4-products.length})`} />
         <div onClick={handleClickUploadImage} id='sofa_light_dashboard_furniturestore_components_imageUpload_Id' className='sofa_light_dashboard_furniturestore_components_imageUpload'>
           <img src={upload} alt='upload' />
@@ -198,7 +192,7 @@ const cloudinaryRef = useRef();
 
         {/* save product */}
         <EditActionButton handleSave={async e => {
-          if(productName===''||productSubText===''||productCategory===''||productPrice===''||productDiscount===''||productStatus===''||productDescription===''||productMetaTitle===''||productMetaTitle===''||productKeyword===''||products.length===0) {
+          if(productName===''||productSubText===''||productCategory===''||productPrice===''||productDiscount===''||productStatus===''||productDescription===''||products.length===0) {
             document.getElementById("emptyerrorbuttonIdEdit").click();
             return;
           }
@@ -209,9 +203,7 @@ const cloudinaryRef = useRef();
             productPrice,
             productDiscount,
             productStatus,
-            productDescription,
-            productMetaTitle,
-            productKeyword
+            productDescription
           }
           e.target.children[0].style.display = "block"
           e.target.setAttribute("disabled","true")
