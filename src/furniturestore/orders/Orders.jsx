@@ -16,7 +16,7 @@ function Orders() {
             await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
             .then(d => d.json())
             .then(d => {
-                if(d.user === "Not Logged in") {
+                if(d.user === "Not Logged in"||d.user==="Couldn't get user data") {
                     console.log(d, "not logged in")
                     window.location = "/"
                     return
