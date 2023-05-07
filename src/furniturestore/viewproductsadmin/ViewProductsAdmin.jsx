@@ -17,7 +17,7 @@ import '../components/search/Search.css'
 import '../components/sortby/SortBy.css'
 
 function ViewProductsAdmin() {
-  let [filterMenu, setFilterMenu] = useState(false)
+  let [filterMenu, setFilterMenu] = useState(true)
   const [data, setData] = useState([])
   let getDataStatus = "get"
   let [filterValPrice, setFilterValPrice] = useState(2000000)
@@ -127,16 +127,9 @@ let checkLogin = 'check'
     </div>
     <div className='sofa_light_dashboard_furniturestore_components_viewproducts'>
        <button className='filter_menu' onClick={e => {
-            let div = document.querySelector(".sofa_light_dashboard_furniturestore_components_viewproducts_left");
-            
-            if(filterMenu) {
-              div.style.display = "flex";
-            }else {
-              div.style.display = "none"
-            }
             setFilterMenu(!filterMenu)
           }}>Filter Menu</button>
-        <div className='sofa_light_dashboard_furniturestore_components_viewproducts_left'>
+        <div className={filterMenu?'sofa_light_dashboard_furniturestore_components_viewproducts_left':'sofa_light_dashboard_furniturestore_components_viewproducts_left displayFlex'}>
          
         <div className='sofa_light_dashboard_furniturestore_components_viewproducts_filter_title'>
         <img src={filter} alt="filter" /><p style={{marginTop: '20px'}}>Filter</p>

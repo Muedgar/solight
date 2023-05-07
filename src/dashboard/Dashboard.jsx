@@ -15,7 +15,7 @@ import Settings from './Settings';
 
 
 function Dashboard() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   return (
     <>
     <BrowserRouter>

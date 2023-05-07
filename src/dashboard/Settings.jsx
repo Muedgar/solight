@@ -40,14 +40,27 @@ function Settings() {
         <div className='signin_title'>
             <p>Change Password SofaLight</p>
         </div>
-        <label>Old Password</label>
-        <input type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} />
         <label>New Password</label>
+        <input type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} />
+        <label>Confirm New Password</label>
         <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
         <div className='signinbutton'>
             <button onClick={async e => {
                 e.target.innerHTML = 'Changing Password ...'
-                
+                if(oldPassword.toString().trim() !== newPassword.toString().trim()) {
+                    e.target.innerHTML = "Passwords Don't match ..."
+                    setTimeout(() => {
+                        e.target.innerHTML = "Change Password"
+                    }, 3000);
+                    return;
+                }
+                if(newPassword.toString().trim().length<6) {
+                    e.target.innerHTML = "Passwords Length Must Be More Than 6 ..."
+                    setTimeout(() => {
+                        e.target.innerHTML = "Change Password"
+                    }, 3000);
+                    return;
+                }
                 await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/changePassword",{
                     method: 'POST',
                     credentials: 'include',
