@@ -20,7 +20,7 @@ function ViewProductsAdmin() {
   let [filterMenu, setFilterMenu] = useState(true)
   const [data, setData] = useState([])
   let getDataStatus = "get"
-  let [filterValPrice, setFilterValPrice] = useState(2000000)
+  let [filterValPrice, setFilterValPrice] = useState(20000000000000000)
   const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Partitions',25], ['Bed rooms',25], ['Doors',25],['Ceiling',25],['Mattress',25],['Painting',25]]
   
   let [filterValCategory,setFilterValCategory] = useState('All')
