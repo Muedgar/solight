@@ -11,11 +11,14 @@ function TextField(props) {
           setVal(e.target.value)
           props.keepSync(e.target.value);
           }}>
+         
             <option value='Kitchen'>Kitchen</option>
             <option value='Office'>Office</option>
             <option value='Living room'>Living room</option>
+            <option value='Dining'>Dining</option>
             <option value='Partitions'>Partitions</option>
             <option value='Bed rooms'>Bed rooms</option>
+            <option value='Wardrobes'>Wardrobes</option>
             <option value='Doors'>Doors</option>
             <option value='Ceiling'>Ceiling</option>
             <option value='Mattress'>Mattress</option>
