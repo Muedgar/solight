@@ -20,8 +20,8 @@ function ViewProductsAdmin() {
   let [filterMenu, setFilterMenu] = useState(true)
   const [data, setData] = useState([])
   let getDataStatus = "get"
-  let [filterValPrice, setFilterValPrice] = useState(3000000)
-  const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Partitions',25], ['Bed rooms',25], ['Doors',25],['Ceiling',25],['Mattress',25],['Painting',25]]
+  let [filterValPrice, setFilterValPrice] = useState(3100000)
+  const categories = [['All',25], ['Kitchen',25], ['Office',25], ['Living room',25], ['Dining',25], ['Partitions',25], ['Bed rooms',25], ['Wardrobes',25], ['Doors',25],['Ceiling',25],['Mattress',25],['Painting',25]]
   
   let [filterValCategory,setFilterValCategory] = useState('All')
   
@@ -192,10 +192,9 @@ let checkLogin = 'check'
             {data.length>0? 
             
             sortDataBy(data).map((d,k) => {
-              // if(Number(d.productInfo.productPrice)<filterValPrice) {
+              if(Number(d.productInfo.productPrice)<filterValPrice) {
                 
                 
-              // }
               
               // the first thing to consider is product price
                 // the second thing to consider is product category,
@@ -208,6 +207,7 @@ let checkLogin = 'check'
                   }
                   
                 }
+              }
                return <div style={{display: 'none'}} key={k}></div>
             }):
             <h1>Loading products ...</h1>   
