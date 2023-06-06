@@ -194,10 +194,9 @@ let checkLogin = 'check'
             sortDataBy(data).map((d,k) => {
               if(Number(d.productInfo.productPrice)<filterValPrice) {
                 
-                
-              
               // the first thing to consider is product price
                 // the second thing to consider is product category,
+                if(d.productInfo.productCategory) {
                 if((filterValCategory.toLowerCase() === "all") || (d.productInfo.productCategory.toLowerCase() === filterValCategory.toLowerCase())) {
                  
                   if(filterSearchVal.trim()==='' || d.productInfo.productName.toLowerCase().includes(filterSearchVal.toLowerCase().trim())) {
@@ -207,6 +206,18 @@ let checkLogin = 'check'
                   }
                   
                 }
+                }else {
+                  if((filterValCategory.toLowerCase() === "all")) {
+                 
+                  if(filterSearchVal.trim()==='' || d.productInfo.productName.toLowerCase().includes(filterSearchVal.toLowerCase().trim())) {
+                    return(
+                      <ProductAdmin productData={d} id={d._id} key={k} src={d.images[0][1]} productname={d.productInfo.productName} productprice={formatPrice(d.productInfo.productPrice)}/>
+                    )
+                  }
+                  
+                }
+                }
+                
               }
                return <div style={{display: 'none'}} key={k}></div>
             }):
