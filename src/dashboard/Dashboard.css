@@ -167,6 +167,29 @@
     z-index: 110;
     box-shadow: 0 13px 10px 5px rgba(153, 153, 153, 0.249);
 }
+/*  */
+.dashboard_navbar_admin_sidebar {
+
+}
+/* width */
+.dashboard_navbar_admin_sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.dashboard_navbar_admin_sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.dashboard_navbar_admin_sidebar::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.dashboard_navbar_admin_sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .dashboard_navbar_admin_sidebar_width {
     width: 250px;
 }
