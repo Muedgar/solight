@@ -43,7 +43,7 @@ function Dashboard() {
                     <p><img className='dashboard_navbar_admin_profile_img' src={gear} alt="gear" /><span style={{color: 'black'}}>Settings</span></p>
                     </NavLink>
                     <button onClick={async e => {
-                        await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/logout",{credentials: 'omit'})
+                        await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/logout?jwt=${localStorage.getItem('token')}`,{credentials: 'omit'})
                         .then(d => d.json())
                         .then(d => {
                             localStorage.clear()

@@ -61,9 +61,9 @@ function Settings() {
                     }, 3000);
                     return;
                 }
-                await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/changePassword",{
+                await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/changePassword?jwt=${localStorage.getItem('token')}`,{
                     method: 'POST',
-                    credentials: 'include',
+                    credentials: 'omit',
                     headers: {
                         "Content-Type": "application/json",
                       },
