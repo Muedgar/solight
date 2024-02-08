@@ -46,6 +46,8 @@ function Dashboard() {
                         await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/logout",{credentials: 'omit'})
                         .then(d => d.json())
                         .then(d => {
+                            localStorage.clear()
+                            sessionStorage.clear()
                             window.location = "/"
                         }).catch(e => console.log(e))
                     }}><img className='dashboard_navbar_admin_profile_img' src={rightfrombracket} alt="right from bracket" /><span>Sign Out</span></button>

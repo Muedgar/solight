@@ -13,7 +13,7 @@ function Orders() {
 
     useEffect(() => {
         async function getUser() {
-            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "omit"})
+            await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn?jwt=${localStorage.getItem('token')}`,{credentials: "omit"})
             .then(d => d.json())
             .then(d => {
                 if(d.user === "Not Logged in"||d.user==="Couldn't get user data") {
@@ -108,7 +108,7 @@ function Orders() {
             </thead>
             <tbody>
             {
-                data.map((d,k) => (
+               data && data.map((d,k) => (
                     <tr id={`ordertrId${k}`} onClick={e => {
 
                         document.getElementById(`ordertrId${k}`).classList.toggle("activeToDelete")

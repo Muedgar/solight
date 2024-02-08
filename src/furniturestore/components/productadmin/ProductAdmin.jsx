@@ -25,7 +25,7 @@ function ProductAdmin(props)  {
           <button onClick={async e => {
 await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/delete/"+props.id, {
   method: "DELETE",
-  credentials: 'include'
+  credentials: 'omit'
 })
   .then((response) => response.json())
   .then((result) => {
