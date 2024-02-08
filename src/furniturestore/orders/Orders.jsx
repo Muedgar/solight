@@ -13,7 +13,7 @@ function Orders() {
 
     useEffect(() => {
         async function getUser() {
-            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "omit"})
             .then(d => d.json())
             .then(d => {
                 if(d.user === "Not Logged in"||d.user==="Couldn't get user data") {

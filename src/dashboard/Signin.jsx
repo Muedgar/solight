@@ -8,7 +8,7 @@ async function logIn(email, password) {
     let d = {email,password}
    await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/login", {
   method: "POST",
-  credentials: "include",
+  credentials: "omit",
   headers: {
     "Content-Type": "application/json",
   },
@@ -36,7 +36,7 @@ function Signin() {
     let checkLogin = 'check'
     useEffect(() => {
         async function getUser() {
-            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "omit"})
             .then(d => d.json())
             .then(d => {
                 console.log(d);

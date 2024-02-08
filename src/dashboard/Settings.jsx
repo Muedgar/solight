@@ -9,7 +9,7 @@ function Settings() {
   let checkLogin = 'check'
     useEffect(() => {
         async function getUser() {
-            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "include"})
+            await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/getLoggedIn",{credentials: "omit"})
             .then(d => d.json())
             .then(d => {
                 console.log(d);
