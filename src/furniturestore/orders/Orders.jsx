@@ -36,7 +36,7 @@ function Orders() {
     let getDataStatus = "get"
     useEffect(() => {
         async function getData() {
-          let result = await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/order",{credentials: 'include'})
+          let result = await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/order?jwt=${localStorage.getItem('token')}`,{credentials: 'omit'})
           .then(d => d.json())
           .then(d => d).catch(e => 
               {
@@ -75,9 +75,9 @@ function Orders() {
             d.push(data)
         })
         
-        await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/orders/deleteOne", {
+        await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/orders/deleteOne?jwt=${localStorage.getItem('token')}`, {
   method: "DELETE",
-  credentials: 'include',
+  credentials: 'omit',
   headers: {
     "Content-Type": "application/json",
   },
@@ -108,7 +108,7 @@ function Orders() {
             </thead>
             <tbody>
             {
-               data && data.map((d,k) => (
+               data && data.length>0 && data.map((d,k) => (
                     <tr id={`ordertrId${k}`} onClick={e => {
 
                         document.getElementById(`ordertrId${k}`).classList.toggle("activeToDelete")

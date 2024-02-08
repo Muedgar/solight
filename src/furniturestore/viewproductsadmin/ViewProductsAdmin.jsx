@@ -189,7 +189,7 @@ let checkLogin = 'check'
     </div>
           <div className='products_show'>
           <>
-            {data.length>0? 
+            {data && data.length>0? 
             
             sortDataBy(data).map((d,k) => {
               if(Number(d.productInfo.productPrice)<filterValPrice) {

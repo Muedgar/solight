@@ -5,7 +5,7 @@ async function saveProduct(id,data, textInfo) {
     images:data
    }
     /// make a post request.
-   await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/update/"+id, {
+   await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/update/${id}?jwt=${localStorage.getItem('token')}`, {
    credentials: 'omit',
   method: "PUT",
   headers: {

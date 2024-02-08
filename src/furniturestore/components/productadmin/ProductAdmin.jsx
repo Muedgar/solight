@@ -23,13 +23,14 @@ function ProductAdmin(props)  {
             document.getElementById("productActions_Admin_Edit_A").click();
           }}>Edit Item.</button>
           <button onClick={async e => {
-await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/delete/"+props.id, {
+await fetch(`https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/delete/${props.id}?jwt=${localStorage.getItem('token')}`, {
   method: "DELETE",
   credentials: 'omit'
 })
   .then((response) => response.json())
   .then((result) => {
     window.location.reload()
+    console.log(result)
   })
   .catch((error) => {
     console.log(error.message)
