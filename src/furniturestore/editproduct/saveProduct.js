@@ -6,7 +6,7 @@ async function saveProduct(id,data, textInfo) {
    }
     /// make a post request.
    await fetch("https://www.backend.sofalightbusiness.com/sofalight/backend/api/products/update/"+id, {
-   credentials: 'include',
+   credentials: 'omit',
   method: "PUT",
   headers: {
     "Content-Type": "application/json",
